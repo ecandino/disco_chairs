@@ -1,0 +1,23 @@
+html {
+  overflow: auto;
+}
+
+.header{
+	background: #fff;
+}
+
+h1.logo { 
+  background: url("../images/disco_logo.png");
+  width: 200px;
+  height: 50px;
+  background-size: 200px 50px;
+}
+
+#drop {
+  border: 3px dashed #ccc;
+  padding: 10px;
+  background: #fff;
+  min-height: 200px;
+/*  overflow-y: auto;*/
+}
+
