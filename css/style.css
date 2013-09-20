@@ -21,3 +21,6 @@ h1.logo {
 /*  overflow-y: auto;*/
 }
 
+.hide{
+  display: none;
+}

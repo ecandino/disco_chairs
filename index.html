@@ -14,26 +14,34 @@
   <body>
     
 
-    <header class="header">
-      <h1 class="logo"></h1>  
-    </header>
+    <div id="startView">
+        <h1>DISCO CHAIRS</h1>
+        <label>How Many People?</label>
+        <input type="number" value="3" id="people"/>
+        <section id="drop">
+        <img />
+          <p class="info">Drop a playlist here!</p>
+        </section>
+        <button id="setupBtn">Start Game</button>
+    </div>
 
-    
-    <input type="number" value="3" /><label>People</label>
-    <section id="timer">
-      <input id="clock" disabled />
-      <input id="waiting" value="5" disabled /> seconds till next round.
-      <button id="start">Start</button>
-      <button id="pause">Pause</button>
-      <button id="reset">Reset</button>
-    </section>
+    <div id="gameView" class="hide">
+        
+        <div id="timer">
+          <input id="clock" disabled value="" />
+          <br>
+          <button id="start">Start</button>
+          <button id="pause">Pause</button>
+          <button id="reset">Reset</button>
+        </div>
+    </div>
+
+    <div id="endView" class="hide">
+        <h1>We Have A Winner</h1>
+        <button id="newGameBtn">Play Again!</button>
+    </div>
 
 
-    <section id="drop">
-      <p class="info">Drop here for info about the dragged item</p>
-    </section>
-
-    <div id="playlistContainer"></div>
     <script src="scripts/main.js"></script>
   </body>
 </html>
