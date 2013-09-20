@@ -13,16 +13,16 @@
   </head>
   <body>
     
-
+    <h1 class="logo"></h1>
     <div id="startView">
-        <h1>DISCO CHAIRS</h1>
-        <label>How Many People?</label>
-        <input type="number" value="3" id="people"/>
-        <section id="drop">
-        <img />
+        <div class="people-container">
+          <label>How Many People?</label>
+          <input type="number" value="3" id="people" class="people-input"/>
+        </div>
+        <div id="drop">
           <p class="info">Drop a playlist here!</p>
-        </section>
-        <button id="setupBtn">Start Game</button>
+        </div>
+        <button id="setupBtn" class="start-btn">Start Game</button>
     </div>
 
     <div id="gameView" class="hide">
@@ -30,15 +30,19 @@
         <div id="timer">
           <input id="clock" disabled value="" />
           <br>
-          <button id="start">Start</button>
+          <button id="start">Play</button>
           <button id="pause">Pause</button>
           <button id="reset">Reset</button>
+        </div>
+
+        <div id="playlist-container">
+          
         </div>
     </div>
 
     <div id="endView" class="hide">
-        <h1>We Have A Winner</h1>
-        <button id="newGameBtn">Play Again!</button>
+        <h1 class="title">We Have A Winner</h1>
+        <button id="newGameBtn" class="start-btn">Play Again!</button>
     </div>
 
 

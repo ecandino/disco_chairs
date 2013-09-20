@@ -1,45 +1,77 @@
 require([
   '$api/models',
+  'scripts/views',
   '$views/list#List'
-], function(models, List) {
+], function(models, chairs, List) {
   'use strict';
 
-  var timer,
-      clock = document.getElementById('clock'),
-      startBtn = document.getElementById('start'),
-      pauseBtn = document.getElementById('pause'),
-      resetBtn = document.getElementById('reset'),
-      seconds = 10;
 
-  var startClock = function (){
-    seconds = parseInt(clock.getAttribute('value'), 10)
-    timer = window.setInterval(countdown, 1000);
+  var timer,
+      clock       = document.getElementById('clock'),
+      startBtn    = document.getElementById('start'),
+      pauseBtn    = document.getElementById('pause'),
+      peopleInput = document.getElementById('people'),
+      seconds, breakPeriod;
+
+  var getRandomBetweenRange = function(min, max){
+    var randomFloat = Math.random() * (max - min) + min;
+    return Math.round(randomFloat);
   }
 
-  var stopClock = function (){
+  var startClock = function (){
+    seconds = parseInt(clock.getAttribute('value'), 10);
+    timer = window.setInterval(countdown, 1000);   
+  }
+
+  var pauseGame = function (){
     clearInterval(timer);
+    models.player.pause();
   }
 
   var resetClock = function (){
     clearInterval(timer);
-    clock.setAttribute('value', 10);
-  }
-
-  var init = function (){
-
-    function countdown() {
-      if(seconds === 0){
-          stopClock();
-          models.player.skipToNextTrack();
-      } else {
-        seconds = seconds - 1;  
-        clock.setAttribute('value', seconds);
-      }
+    if (breakPeriod){
+      console.log("Break Time!");
+      clock.setAttribute('value', 10);
+      breakPeriod = false;
+      models.player.skipToNextTrack();
+      models.player.seek(30000);
+      models.player.pause();
+    } else {
+      people = people - 1;
+      console.log("New Round");
+      clock.setAttribute('value', getRandomBetweenRange(15,45));
+      breakPeriod = true;
+      models.player.play();
     }
-    startBtn.onclick = startClock;
-    pauseBtn.onclick = stopClock;
-    resetBtn.onclick = resetClock;
+    startClock();
   }
 
+  var countdown = function() {
+    if(seconds === 0){
+        clearInterval(timer);
+        countdownOver();
+    } else {
+      seconds = seconds - 1;  
+      clock.setAttribute('value', seconds);
+    }
+  }
+  var startGame = function(){
+    people  = parseInt(peopleInput.getAttribute('value'), 10);
+    breakPeriod = false;
+    resetClock();
+  }
+
+  var countdownOver = function(){
+    if(people === 1){
+      models.player.stop();
+      return chairs.endGame();
+    } else {
+      resetClock();
+    }
+  }
+
+  startBtn.onclick = startGame;
+  pauseBtn.onclick = pauseGame;
 
 });
