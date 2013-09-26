@@ -7,7 +7,7 @@ require([
   var dropBox = document.getElementById('drop'),
       droppedList;
 
-  var createListFromPlaylist = function(playlist) {
+  var createListFromPlaylist = function(playlist, number) {
     var list = List.forPlaylist(playlist, {
       fields: ['nowplaying','track', 'artist', 'time','album']
     });
@@ -15,6 +15,8 @@ require([
     document.getElementById('playlist-container').innerHTML = "";
     document.getElementById('playlist-container').appendChild(list.node);
     list.init();
+    window.list = list;
+    list.selectItem(0);
     list.focus();
   };
 
@@ -37,13 +39,40 @@ require([
   var setupGame = function(){
     var startView = document.getElementById("startView");
     var gameView  = document.getElementById("gameView");
+    var message   = dropBox.getElementsByClassName('info')[0];
+
+
     if (checkForPlaylist()){
       startView.setAttribute('class', 'hide');
       gameView.setAttribute('class', '');
     } else {
-      dropBox.innerHTML = "Add a playlist to continue";
+      message.innerHTML = "Add a playlist to continue";
+      return false;
     }
+    return true;
     // Check people and playlist
+  }
+
+  var setupPlaylist = function(uri) {
+    var container = document.getElementById('playlist-preview'),
+        image = document.createElement('img'),
+        h = document.createElement('h4'),
+        peopleInput = document.getElementById('people'),
+        people  = parseInt(peopleInput.getAttribute('value'), 10);
+
+    console.log(people);
+    droppedList = models.Playlist.fromURI(uri).load('name', 'image')
+      .done(function(playlist){
+        createListFromPlaylist(playlist, people);
+        models.player.playContext(playlist, 0, 30000);
+        models.player.pause();
+        container.innerHTML = '';
+        h.innerHTML = playlist.name;
+        image.setAttribute('src', playlist.image);
+        image.setAttribute('class', 'playlist-image');
+        container.appendChild(image);
+        container.appendChild(h);
+    });
   }
 
 
@@ -70,28 +99,16 @@ require([
   }, false);
 
   dropBox.addEventListener('drop', function(e){
-      e.preventDefault();
-      window.models = models
-      var uri = e.dataTransfer.getData('text').
-          image = document.createElement('img'),
-          p = document.createElement('p');
-      droppedList = models.Playlist.fromURI(uri).load('name', 'image')
-        .done(function(playlist){
-          createListFromPlaylist(playlist);
-          models.player.playContext(playlist, 0, 30000);
-          dropBox.innerHTML = '';
-          p.innerHTML = playlist.name;
-          // img.setAttribute('src', playlist.imageSizeFor(100));
-          dropBox.appendChild(img);
-          dropBox.appendChild(p);
-      });
-      models.player.pause();
-      this.classList.remove('over');
+    e.preventDefault();
+    var uri = e.dataTransfer.getData('text');
+    
+    setupPlaylist(uri);
+    this.classList.remove('over');
   }, false);
 
   document.getElementById('newGameBtn').onclick = resetGame;
-  document.getElementById('setupBtn').onclick   = setupGame;
   document.getElementById('reset').onclick      = resetGame;
 
+  exports.setupGame = setupGame;
   exports.endGame = endGame;
 });

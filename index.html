@@ -12,28 +12,43 @@
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
+ <!--    <button class="sp-button"
+            style="position: absolute; top: 10px; right: 10px;"
+            onclick="window.location.href='./test.html'">Run Tests</button><br /> -->
     
-    <h1 class="logo"></h1>
+    
     <div id="startView">
+        <h1 class="logo"></h1>
         <div class="people-container">
           <label>How Many People?</label>
           <input type="number" value="3" id="people" class="people-input"/>
         </div>
         <div id="drop">
-          <p class="info">Drop a playlist here!</p>
+          
+          <div id="playlist-preview">
+            <h4 class="info">Drop a playlist here!</h4>  
+          </div>
         </div>
         <button id="setupBtn" class="start-btn">Start Game</button>
     </div>
 
     <div id="gameView" class="hide">
-        
-        <div id="timer">
-          <input id="clock" disabled value="" />
-          <br>
-          <button id="start">Play</button>
-          <button id="pause">Pause</button>
-          <button id="reset">Reset</button>
+        <div class="header">
+          <h3 class="round">Round <span id="round-number">0</span></h3>
+
+
+          <div id="timer">
+            <input id="clock" disabled value="" />
+          </div>
+          
+          <div class="right-nav">
+            <button id="start">Play</button>
+            <button id="pause">Pause</button>
+            <button id="reset">Reset</button>
+          </div>
+          
         </div>
+        
 
         <div id="playlist-container">
           
@@ -41,6 +56,7 @@
     </div>
 
     <div id="endView" class="hide">
+        <h1 class="logo"></h1>
         <h1 class="title">We Have A Winner</h1>
         <button id="newGameBtn" class="start-btn">Play Again!</button>
     </div>

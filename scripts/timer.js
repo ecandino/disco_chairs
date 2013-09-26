@@ -2,17 +2,13 @@ require([
   '$api/models',
   'scripts/views',
   '$views/list#List'
-], function(models, chairs, List) {
+], function(models, views, List) {
   'use strict';
 
 
-  var timer,
-      clock       = document.getElementById('clock'),
-      startBtn    = document.getElementById('start'),
-      pauseBtn    = document.getElementById('pause'),
-      peopleInput = document.getElementById('people'),
-      seconds, breakPeriod;
-
+  var clock = document.getElementById('clock'),
+      timer, seconds, breakPeriod, people;
+      
   var getRandomBetweenRange = function(min, max){
     var randomFloat = Math.random() * (max - min) + min;
     return Math.round(randomFloat);
@@ -31,7 +27,6 @@ require([
   var resetClock = function (){
     clearInterval(timer);
     if (breakPeriod){
-      console.log("Break Time!");
       clock.setAttribute('value', 10);
       breakPeriod = false;
       models.player.skipToNextTrack();
@@ -39,7 +34,9 @@ require([
       models.player.pause();
     } else {
       people = people - 1;
-      console.log("New Round");
+      var roundInput = document.getElementById("round-number"),
+          round = parseInt(roundInput.innerHTML, 10);
+      roundInput.innerHTML = round + 1;
       clock.setAttribute('value', getRandomBetweenRange(15,45));
       breakPeriod = true;
       models.player.play();
@@ -56,7 +53,10 @@ require([
       clock.setAttribute('value', seconds);
     }
   }
+  
   var startGame = function(){
+    views.setupGame();
+    var peopleInput = document.getElementById('people');
     people  = parseInt(peopleInput.getAttribute('value'), 10);
     breakPeriod = false;
     resetClock();
@@ -65,13 +65,20 @@ require([
   var countdownOver = function(){
     if(people === 1){
       models.player.stop();
-      return chairs.endGame();
+      return views.endGame();
     } else {
       resetClock();
     }
   }
 
-  startBtn.onclick = startGame;
-  pauseBtn.onclick = pauseGame;
+  var initGame = function(){
+    if (views.setupGame()){
+      startGame();
+    }
+  }
+
+  document.getElementById('start').onclick    = startGame;
+  document.getElementById('pause').onclick    = pauseGame;
+  document.getElementById('setupBtn').onclick = initGame;
 
 });
