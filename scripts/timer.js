@@ -55,9 +55,12 @@ require([
   }
   
   var startGame = function(){
+    var peopleInput = document.getElementById('people'),
+        totalInput  = document.getElementById('total-rounds');
+
     views.setupGame();
-    var peopleInput = document.getElementById('people');
     people  = parseInt(peopleInput.getAttribute('value'), 10);
+    totalInput.innerHTML = people-1;
     breakPeriod = false;
     resetClock();
   }

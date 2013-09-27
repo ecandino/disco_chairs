@@ -59,10 +59,13 @@ h1.logo {
   height: 50px;
   margin: 20px auto;
   display:block;
+  font-size: 20px;
+}
+
+.btn{
   background: #FF00CC;
   border: none;
   color: #fff;
-  font-size: 20px;
 }
 
 #timer{
@@ -115,4 +118,27 @@ h1.logo {
 
 #playlist-container{
   float:left;
+}
+
+.icon{
+  display: inline-block;
+  width: 20px;
+  height:20px;
+  line-height: 20px;
+  vertical-align: text-top;
+  margin-top: 1px;
+  background-size: 20px 20px;
+}
+
+.icon-play{
+  background: url("../images/glyphicons_173_play.png") no-repeat center center;
+}
+
+.icon-pause{
+  background: url("../images/glyphicons_174_pause.png") no-repeat center center;
+}
+
+.icon-reset{
+  background: url("../images/glyphicons_081_refresh.png") no-repeat center center;
+  background-size: 18px 18px;
 }

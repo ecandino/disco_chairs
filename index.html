@@ -17,7 +17,7 @@
             onclick="window.location.href='./test.html'">Run Tests</button><br /> -->
     
     
-    <div id="startView">
+    <div id="startView" class="">
         <h1 class="logo"></h1>
         <div class="people-container">
           <label>How Many People?</label>
@@ -29,12 +29,12 @@
             <h4 class="info">Drop a playlist here!</h4>  
           </div>
         </div>
-        <button id="setupBtn" class="start-btn">Start Game</button>
+        <button id="setupBtn" class="btn start-btn">Start Game</button>
     </div>
 
     <div id="gameView" class="hide">
         <div class="header">
-          <h3 class="round">Round <span id="round-number">0</span></h3>
+          <h3 class="round">Round <span id="round-number">0</span> of <span id="total-rounds">0</span></h3>
 
 
           <div id="timer">
@@ -42,9 +42,9 @@
           </div>
           
           <div class="right-nav">
-            <button id="start">Play</button>
-            <button id="pause">Pause</button>
-            <button id="reset">Reset</button>
+            <button class="btn" id="start"><i class="icon icon-play"></i></button>
+            <button class="btn" id="pause"><i class="icon icon-pause"></i></button>
+            <button class="btn" id="reset"><i class="icon icon-reset"></i></button>
           </div>
           
         </div>
@@ -58,7 +58,7 @@
     <div id="endView" class="hide">
         <h1 class="logo"></h1>
         <h1 class="title">We Have A Winner</h1>
-        <button id="newGameBtn" class="start-btn">Play Again!</button>
+        <button id="newGameBtn" class="btn start-btn">Play Again!</button>
     </div>
 
 
