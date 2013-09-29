@@ -1,8 +1,7 @@
 require([
   '$api/models',
   'scripts/views',
-  '$views/list#List'
-], function(models, views, List) {
+], function(models, views) {
   'use strict';
 
 
@@ -12,17 +11,17 @@ require([
   var getRandomBetweenRange = function(min, max){
     var randomFloat = Math.random() * (max - min) + min;
     return Math.round(randomFloat);
-  }
+  };
 
   var startClock = function (){
     seconds = parseInt(clock.getAttribute('value'), 10);
     timer = window.setInterval(countdown, 1000);   
-  }
+  };
 
   var pauseGame = function (){
     clearInterval(timer);
     models.player.pause();
-  }
+  };
 
   var resetClock = function (){
     clearInterval(timer);
@@ -42,7 +41,7 @@ require([
       models.player.play();
     }
     startClock();
-  }
+  };
 
   var countdown = function() {
     if(seconds === 0){
@@ -52,7 +51,7 @@ require([
       seconds = seconds - 1;  
       clock.setAttribute('value', seconds);
     }
-  }
+  };
   
   var startGame = function(){
     var peopleInput = document.getElementById('people'),
@@ -63,7 +62,7 @@ require([
     totalInput.innerHTML = people-1;
     breakPeriod = false;
     resetClock();
-  }
+  };
 
   var countdownOver = function(){
     if(people === 1){
@@ -72,13 +71,13 @@ require([
     } else {
       resetClock();
     }
-  }
+  };
 
   var initGame = function(){
     if (views.setupGame()){
       startGame();
     }
-  }
+  };
 
   document.getElementById('start').onclick    = startGame;
   document.getElementById('pause').onclick    = pauseGame;

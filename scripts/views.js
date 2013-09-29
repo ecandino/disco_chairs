@@ -7,7 +7,7 @@ require([
   var dropBox = document.getElementById('drop'),
       droppedList;
 
-  var createListFromPlaylist = function(playlist, number) {
+  var createListFromPlaylist = function(playlist) {
     var list = List.forPlaylist(playlist, {
       fields: ['nowplaying','track', 'artist', 'time','album']
     });
@@ -22,19 +22,19 @@ require([
 
   var checkForPlaylist = function(){
     return typeof droppedList !== "undefined" ?  true : false;
-  }
+  };
 
   var resetGame = function(){
     models.player.stop();
     window.location.reload();
-  }
+  };
 
   var endGame = function(){
     var gameView  = document.getElementById("gameView");
     var endView  = document.getElementById("endView");
     gameView.setAttribute('class', 'hide');
     endView.setAttribute('class', '');
-  }
+  };
 
   var setupGame = function(){
     var startView = document.getElementById("startView");
@@ -51,7 +51,7 @@ require([
     }
     return true;
     // Check people and playlist
-  }
+  };
 
   var setupPlaylist = function(uri) {
     var container = document.getElementById('playlist-preview'),
@@ -60,10 +60,9 @@ require([
         peopleInput = document.getElementById('people'),
         people  = parseInt(peopleInput.getAttribute('value'), 10);
 
-    console.log(people);
     droppedList = models.Playlist.fromURI(uri).load('name', 'image')
       .done(function(playlist){
-        createListFromPlaylist(playlist, people);
+        createListFromPlaylist(playlist);
         models.player.playContext(playlist, 0, 30000);
         models.player.pause();
         container.innerHTML = '';
@@ -73,7 +72,7 @@ require([
         container.appendChild(image);
         container.appendChild(h);
     });
-  }
+  };
 
 
   dropBox.addEventListener('dragstart', function(e){
